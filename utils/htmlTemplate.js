@@ -93,7 +93,7 @@ function getHtmlTemplateForPasswordReset(name, link) {
         <p>Dear ${name},</p>
         <p>please click the link below to reset password</p>
         <a href="${link}" class="verification-link">Reset Password</a>
-        <p>If you did not requested to up password, please ignore this email.</p>
+        <p>If you did not requested to change password, please ignore this email.</p>
         <p>Best regards,<br> <a href="https://450dsa.com">450DSA</a> </p>
     </div>
 </body>

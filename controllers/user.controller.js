@@ -9,7 +9,7 @@ const { ApiResponse } = require("../utils/ApiResponse");
 const config = require("../config/config");
 const {
   sendVerificationEmail,
-  sendPasswordRestEmail,
+  sendPasswordResetEmail,
 } = require("../utils/mail");
 const User = require("../models/user.model");
 
@@ -139,7 +139,9 @@ const handleGetUserDetails = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with id"));
     }
-    return res.status(200).json(new ApiResponse(200, user, "success"));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { ...user, password: "" }, "success"));
   } catch (error) {
     console.log(error.message);
     res
@@ -163,7 +165,7 @@ const handleRequestForPasswordReset = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with Email"));
     }
-    return sendPasswordRestEmail(res, user.name, user.email, user.token);
+    return sendPasswordResetEmail(res, user.name, user.email, user.token);
   } catch (error) {
     console.log(error.message);
     res
@@ -199,7 +201,11 @@ const handleChangePassword = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with Token"));
     }
-    return res.status(200).json(new ApiResponse(200, user, "Password Updated"));
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, { ...user, password: "" }, "Password Updated")
+      );
   } catch (error) {
     console.log(error.message);
     res
