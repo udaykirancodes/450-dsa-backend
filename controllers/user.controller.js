@@ -7,7 +7,10 @@ const mongoose = require("mongoose");
 const { ApiError } = require("../utils/ApiError");
 const { ApiResponse } = require("../utils/ApiResponse");
 const config = require("../config/config");
-const { sendVerificationEmail } = require("../utils/mail");
+const {
+  sendVerificationEmail,
+  sendPasswordRestEmail,
+} = require("../utils/mail");
 const User = require("../models/user.model");
 
 // Register a User
@@ -144,9 +147,71 @@ const handleGetUserDetails = async (req, res) => {
       .json(new ApiError(400, [], "Internal Server Error : " + error.message));
   }
 };
+// Request for Password Reset
+const handleRequestForPasswordReset = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json(new ApiError(400, errors.array(), "Error in Fields"));
+    }
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiError(400, [], "User Not found with Email"));
+    }
+    return sendPasswordRestEmail(res, user.name, user.email, user.token);
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .json(new ApiError(400, [], "Internal Server Error : " + error.message));
+  }
+};
+// Edit Password
+const handleChangePassword = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json(new ApiError(400, errors.array(), "Error in Fields"));
+    }
+    const { token, password, changePassword } = req.body;
+    if (password !== changePassword) {
+      return res.status(400).json(new ApiError(400, [], "Password Mismatch"));
+    }
+    // Hash the Password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // change the password
+    const user = await User.findOneAndUpdate(
+      { token },
+      { password: hashedPassword },
+      { new: true }
+    );
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiError(400, [], "User Not found with Token"));
+    }
+    return res.status(200).json(new ApiResponse(200, user, "Password Updated"));
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .json(new ApiError(400, [], "Internal Server Error : " + error.message));
+  }
+};
 module.exports = {
   handleRegisterUser,
   handleLoginUser,
   handleVerifyEmail,
   handleGetUserDetails,
+  handleRequestForPasswordReset,
+  handleChangePassword,
 };

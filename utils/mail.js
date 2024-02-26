@@ -3,7 +3,10 @@ const nodemailer = require("nodemailer");
 const config = require("../config/config");
 const { ApiError } = require("./ApiError");
 const { ApiResponse } = require("./ApiResponse");
-const { getHtmlTemplateForVerification } = require("./htmlTemplate");
+const {
+  getHtmlTemplateForVerification,
+  getHtmlTemplateForPasswordReset,
+} = require("./htmlTemplate");
 let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -36,11 +39,17 @@ const sendEmail = async (res, to_email, subject_to, html_to) => {
 
 // send email to verify a user
 const sendVerificationEmail = async (res, name, email, token) => {
-  const url = config.BASE_URL + "/api/user/verify/" + token;
+  const url = "https://450dsa.com/reset-password/" + token;
   const htmlTemplate = getHtmlTemplateForVerification(name, url);
   return sendEmail(res, email, "Email Verification @450DSA.COM", htmlTemplate);
 };
-
+// send password reset email
+const sendPasswordRestEmail = async (res, name, email, token) => {
+  const url = config.BASE_URL + "/api/user/password-reset/" + token;
+  const htmlTemplate = getHtmlTemplateForPasswordReset(name, url);
+  return sendEmail(res, email, "Password Reset @450DSA.COM", htmlTemplate);
+};
 module.exports = {
   sendVerificationEmail,
+  sendPasswordRestEmail,
 };
