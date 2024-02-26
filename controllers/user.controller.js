@@ -1,12 +1,14 @@
 const { validationResult } = require("express-validator");
 const { v4: uuid } = require("uuid");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 // Imports
-const User = require("../models/user.model");
 const { ApiError } = require("../utils/ApiError");
 const { ApiResponse } = require("../utils/ApiResponse");
 const config = require("../config/config");
-const { sendEmail, sendVerificationEmail } = require("../utils/mail");
+const { sendVerificationEmail } = require("../utils/mail");
+const User = require("../models/user.model");
 
 // Register a User
 const handleRegisterUser = async (req, res) => {
@@ -78,7 +80,7 @@ const handleLoginUser = async (req, res) => {
     let data = {
       userId: user._id,
     };
-    let authToken = await jwt.sign(data, config.JWT);
+    let authToken = await jwt.sign(data, config.JWT, { expiresIn: "7d" });
     res.status(200).json(new ApiResponse(200, { authToken }, "Success"));
   } catch (error) {
     console.log(error.message);
@@ -88,7 +90,37 @@ const handleLoginUser = async (req, res) => {
   }
 };
 // Verify Email
+const handleVerifyEmail = async (req, res) => {};
+// Get User Details
+const handleGetUserDetails = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json(new ApiError(400, errors.array(), "Error in Fields"));
+    }
+    const id = req.params.id;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json(new ApiError(400, [], "Invalid ID"));
+    }
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiError(400, [], "User Not found with id"));
+    }
+    return res.status(200).json(new ApiResponse(200, user, "success"));
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .json(new ApiError(400, [], "Internal Server Error : " + error.message));
+  }
+};
 module.exports = {
   handleRegisterUser,
   handleLoginUser,
+  handleVerifyEmail,
+  handleGetUserDetails,
 };

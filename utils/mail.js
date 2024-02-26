@@ -38,7 +38,7 @@ const sendEmail = async (res, to_email, subject_to, html_to) => {
 const sendVerificationEmail = async (res, name, email, token) => {
   const url = config.BASE_URL + "/api/auth/verify-email/" + token;
   const htmlTemplate = getHtmlTemplateForVerification(name, url);
-  return sendEmail(res, email, "Email Verification", htmlTemplate);
+  return sendEmail(res, email, "Email Verification @450DSA.COM", htmlTemplate);
 };
 
 module.exports = {
