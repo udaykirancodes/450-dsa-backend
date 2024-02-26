@@ -2,8 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 // import controllers
-const { handleCreateUser } = require("../controllers/user.controller");
+const {
+  handleRegisterUser,
+  handleLoginUser,
+} = require("../controllers/user.controller");
 
-router.get("/", handleCreateUser);
+const {
+  validateUserDetails,
+  validateUserDetailsWhileLogin,
+} = require("../validations/user");
+
+router.post("/register", validateUserDetails, handleRegisterUser);
+router.post("/login", validateUserDetailsWhileLogin, handleLoginUser);
 
 module.exports = router;
