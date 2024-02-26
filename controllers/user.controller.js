@@ -90,7 +90,33 @@ const handleLoginUser = async (req, res) => {
   }
 };
 // Verify Email
-const handleVerifyEmail = async (req, res) => {};
+const handleVerifyEmail = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json(new ApiError(400, errors.array(), "Error in Fields"));
+    }
+    const token = req.params.token;
+    const user = await User.findOneAndUpdate(
+      { token },
+      { isEmailVerified: true },
+      { new: true }
+    );
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiError(400, [], "User Not found with token"));
+    }
+    return res.status(200).json(new ApiResponse(200, user, "success"));
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .json(new ApiError(400, [], "Internal Server Error : " + error.message));
+  }
+};
 // Get User Details
 const handleGetUserDetails = async (req, res) => {
   try {

@@ -12,8 +12,12 @@ const validateUserDetailsWhileLogin = [
 ];
 
 const validateUserId = [param("id").isLength({ min: 10 })];
+
+const validateUserTokenQuery = [param("token").isLength({ min: 5 })];
+
 module.exports = {
   validateUserDetails,
   validateUserDetailsWhileLogin,
   validateUserId,
+  validateUserTokenQuery,
 };
