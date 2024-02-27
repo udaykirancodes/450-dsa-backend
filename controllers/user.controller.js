@@ -68,7 +68,7 @@ const handleLoginUser = async (req, res) => {
         .json(new ApiError(400, errors.array(), "Error in Fields"));
     }
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("-password");
     if (!user) {
       // if user not found
       return res.status(400).json(new ApiError(400, [], "User Not Found"));
@@ -106,7 +106,7 @@ const handleVerifyEmail = async (req, res) => {
       { token },
       { isEmailVerified: true },
       { new: true }
-    );
+    ).select("-password");
     if (!user) {
       return res
         .status(400)
@@ -133,7 +133,7 @@ const handleGetUserDetails = async (req, res) => {
     if (!mongoose.isValidObjectId(id)) {
       return res.status(400).json(new ApiError(400, [], "Invalid ID"));
     }
-    const user = await User.findById(id);
+    const user = await User.findById(id).select("-password");
     if (!user) {
       return res
         .status(400)
@@ -159,7 +159,7 @@ const handleRequestForPasswordReset = async (req, res) => {
         .json(new ApiError(400, errors.array(), "Error in Fields"));
     }
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("-password");
     if (!user) {
       return res
         .status(400)
@@ -195,7 +195,7 @@ const handleChangePassword = async (req, res) => {
       { token },
       { password: hashedPassword },
       { new: true }
-    );
+    ).select("-password");
     if (!user) {
       return res
         .status(400)
