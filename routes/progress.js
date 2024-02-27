@@ -3,13 +3,15 @@ const router = express.Router();
 
 // Models
 const Progress = require("../models/progress.model");
+const { topics } = require("../utils/constants");
+const { progressValidation } = require("../validations/progress");
+const { isUser } = require("../middlewares/isUser");
+const {
+  getUserProgress,
+  updateUserProgress,
+} = require("../controllers/progress.controller");
 
-router.post("/", async (req, res) => {
-  const p = new Progress({
-    userid: "65dc2da459a6aa9b75f7fabb",
-  });
-  const r = await p.save();
-  return res.json(r);
-});
+router.get("/", progressValidation, isUser, getUserProgress);
+router.post("/", progressValidation, isUser, updateUserProgress);
 
 module.exports = router;

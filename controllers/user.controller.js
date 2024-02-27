@@ -81,10 +81,10 @@ const handleLoginUser = async (req, res) => {
 
     // JWT TOKEN
     let data = {
-      userId: user._id,
+      userid: user._id,
     };
     let authToken = await jwt.sign(data, config.JWT, { expiresIn: "7d" });
-    res.status(200).json(new ApiResponse(200, { authToken }, "Success"));
+    res.status(200).json(new ApiResponse(200, { authToken, user }, "Success"));
   } catch (error) {
     console.log(error.message);
     res

@@ -22,8 +22,8 @@ const {
 
 router.post("/register", validateUserDetails, handleRegisterUser);
 router.post("/login", validateUserDetailsWhileLogin, handleLoginUser);
-router.get("/:id", validateUserId, handleGetUserDetails);
-router.get("/verify/:token", validateUserTokenQuery, handleVerifyEmail);
+router.get("/", validateUserId, handleGetUserDetails);
+router.post("/verify/:token", validateUserTokenQuery, handleVerifyEmail);
 router.post("/reset-request", validateUserEmail, handleRequestForPasswordReset);
 router.post("/change-password", validateChangePassword, handleChangePassword);
 module.exports = router;
