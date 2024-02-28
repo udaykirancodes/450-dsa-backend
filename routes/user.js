@@ -14,15 +14,15 @@ const {
 const {
   validateUserDetails,
   validateUserDetailsWhileLogin,
-  validateUserId,
   validateUserTokenQuery,
   validateUserEmail,
   validateChangePassword,
 } = require("../validations/user");
+const { isUser } = require("../middlewares/isUser");
 
 router.post("/register", validateUserDetails, handleRegisterUser);
 router.post("/login", validateUserDetailsWhileLogin, handleLoginUser);
-router.get("/", validateUserId, handleGetUserDetails);
+router.get("/", isUser, handleGetUserDetails);
 router.post("/verify/:token", validateUserTokenQuery, handleVerifyEmail);
 router.post("/reset-request", validateUserEmail, handleRequestForPasswordReset);
 router.post("/change-password", validateChangePassword, handleChangePassword);

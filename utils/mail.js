@@ -45,7 +45,7 @@ const sendVerificationEmail = async (res, name, email, token) => {
 };
 // send password reset email
 const sendPasswordResetEmail = async (res, name, email, token) => {
-  const url = config.FRONTEND_URL + "/reset-password/" + token;
+  const url = config.FRONTEND_URL + "/reset-password?token=" + token;
   const htmlTemplate = getHtmlTemplateForPasswordReset(name, url);
   return sendEmail(res, email, "Password Reset @450DSA.COM", htmlTemplate);
 };

@@ -9,7 +9,7 @@ const apiRoutes = require("./routes");
 
 // apply middlewares
 app.use(express.json());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(
   cors({
     origin: "*",

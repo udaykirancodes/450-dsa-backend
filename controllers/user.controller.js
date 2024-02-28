@@ -68,7 +68,7 @@ const handleLoginUser = async (req, res) => {
         .json(new ApiError(400, errors.array(), "Error in Fields"));
     }
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ email });
     if (!user) {
       // if user not found
       return res.status(400).json(new ApiError(400, [], "User Not Found"));
@@ -129,7 +129,7 @@ const handleGetUserDetails = async (req, res) => {
         .status(400)
         .json(new ApiError(400, errors.array(), "Error in Fields"));
     }
-    const id = req.params.id;
+    const id = req.user._id;
     if (!mongoose.isValidObjectId(id)) {
       return res.status(400).json(new ApiError(400, [], "Invalid ID"));
     }
@@ -139,9 +139,7 @@ const handleGetUserDetails = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with id"));
     }
-    return res
-      .status(200)
-      .json(new ApiResponse(200, { ...user, password: "" }, "success"));
+    return res.status(200).json(new ApiResponse(200, user, "success"));
   } catch (error) {
     console.log(error.message);
     res
@@ -182,8 +180,8 @@ const handleChangePassword = async (req, res) => {
         .status(400)
         .json(new ApiError(400, errors.array(), "Error in Fields"));
     }
-    const { token, password, changePassword } = req.body;
-    if (password !== changePassword) {
+    const { token, password, confirmPassword } = req.body;
+    if (password !== confirmPassword) {
       return res.status(400).json(new ApiError(400, [], "Password Mismatch"));
     }
     // Hash the Password
@@ -195,17 +193,14 @@ const handleChangePassword = async (req, res) => {
       { token },
       { password: hashedPassword },
       { new: true }
-    ).select("-password");
+    );
     if (!user) {
       return res
         .status(400)
         .json(new ApiError(400, [], "User Not found with Token"));
     }
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(200, { ...user, password: "" }, "Password Updated")
-      );
+    user.password = "";
+    return res.status(200).json(new ApiResponse(200, user, "Password Updated"));
   } catch (error) {
     console.log(error.message);
     res
