@@ -4232,7 +4232,7 @@ const data = [
 // });
 
 // const fs = require("fs");
-// fs.writeFile("./data/data.js", JSON.stringify(res), "utf8", (err) => {
+// fs.writeFile("./input.json", JSON.stringify(data), "utf8", (err) => {
 //   if (err) console.log(err);
 // });
 

@@ -8,10 +8,16 @@ const { progressValidation } = require("../validations/progress");
 const { isUser } = require("../middlewares/isUser");
 const {
   getUserProgress,
-  updateUserProgress,
+  handleToogleMarkDone,
+  handleToogleBookMark,
+  handleUpdateNotes,
 } = require("../controllers/progress.controller");
 
 router.get("/", isUser, getUserProgress);
-router.post("/", progressValidation, isUser, updateUserProgress);
+
+// marking Done | Not Done
+router.put("/mark", progressValidation, isUser, handleToogleMarkDone);
+router.put("/book-mark", progressValidation, isUser, handleToogleBookMark);
+router.put("/update-notes", progressValidation, isUser, handleUpdateNotes);
 
 module.exports = router;
