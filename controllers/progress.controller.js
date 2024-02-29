@@ -7,6 +7,9 @@ const getUserProgress = async (req, res) => {
   try {
     const userid = req.user._id;
     const progress = await Progress.findOne({ userid: userid });
+    if (!progress) {
+      return res.status(400).json(new ApiError(400, [], "Not Progress Found"));
+    }
     const data = [
       progress.array,
       progress.matrix,

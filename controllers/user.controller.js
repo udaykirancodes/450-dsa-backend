@@ -11,7 +11,10 @@ const {
   sendVerificationEmail,
   sendPasswordResetEmail,
 } = require("../utils/mail");
+
+// Models
 const User = require("../models/user.model");
+const Progress = require("../models/progress.model");
 
 // Register a User
 const handleRegisterUser = async (req, res) => {
@@ -43,6 +46,13 @@ const handleRegisterUser = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+
+    // create a progress to the user
+    const p = new Progress({
+      userid: savedUser._id,
+    });
+
+    await p.save();
 
     // Send a Email to Validate the Email
     return sendVerificationEmail(

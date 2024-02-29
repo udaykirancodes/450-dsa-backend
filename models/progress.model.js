@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { simpleData } = require("../data/data");
+const { progressData } = require("../data/data");
 
 const datatype = {
   topicName: String,
@@ -22,63 +22,63 @@ const progressSchema = new mongoose.Schema(
     },
     array: {
       type: datatype,
-      default: simpleData[0],
+      default: progressData[0],
     },
     matrix: {
       type: datatype,
-      default: simpleData[1],
+      default: progressData[1],
     },
     string: {
       type: datatype,
-      default: simpleData[2],
+      default: progressData[2],
     },
-    searchAndSort: {
+    search_sort: {
       type: datatype,
-      default: simpleData[3],
+      default: progressData[3],
     },
-    linkedList: {
+    linked_list: {
       type: datatype,
-      default: simpleData[4],
+      default: progressData[4],
     },
-    binaryTrees: {
+    binary_trees: {
       type: datatype,
-      default: simpleData[5],
+      default: progressData[5],
     },
     bst: {
       type: datatype,
-      default: simpleData[6],
+      default: progressData[6],
     },
     greedy: {
       type: datatype,
-      default: simpleData[7],
+      default: progressData[7],
     },
-    backTracking: {
+    backtracking: {
       type: datatype,
-      default: simpleData[8],
+      default: progressData[8],
     },
-    stacksAndQueues: {
+    stacks_queues: {
       type: datatype,
-      default: simpleData[9],
+      default: progressData[9],
     },
     heap: {
       type: datatype,
-      default: simpleData[10],
+      default: progressData[10],
     },
     graph: {
       type: datatype,
-      default: simpleData[11],
+      default: progressData[11],
     },
     trie: {
       type: datatype,
-      default: simpleData[12],
+      default: progressData[12],
     },
-    dynamicProgramming: {
+    dynamic_programming: {
       type: datatype,
-      default: simpleData[13],
+      default: progressData[13],
     },
-    bitManipulation: {
+    bit_manipulation: {
       type: datatype,
-      default: simpleData[14],
+      default: progressData[14],
     },
   },
   { timestamps: true }

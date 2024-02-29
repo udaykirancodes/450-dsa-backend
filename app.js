@@ -8,7 +8,7 @@ const app = express();
 const apiRoutes = require("./routes");
 
 // models
-const Question = require("./models/questions.model");
+const Question = require("./models/question.model");
 
 // apply middlewares
 app.use(express.json());

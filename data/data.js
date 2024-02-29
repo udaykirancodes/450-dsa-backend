@@ -1,4 +1,4 @@
-const simpleData = [
+const progressData = [
   {
     topicName: "Array",
     position: 0,
@@ -2331,4 +2331,4 @@ const simpleData = [
   },
 ];
 
-module.exports = { simpleData };
+module.exports = { progressData };

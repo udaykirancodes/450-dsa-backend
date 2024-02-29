@@ -34,15 +34,15 @@ const questionSchema = new mongoose.Schema(
       type: datatype,
       default: data[2],
     },
-    searchAndSort: {
+    search_sort: {
       type: datatype,
       default: data[3],
     },
-    linkedList: {
+    linked_ist: {
       type: datatype,
       default: data[4],
     },
-    binaryTrees: {
+    binary_trees: {
       type: datatype,
       default: data[5],
     },
@@ -54,11 +54,11 @@ const questionSchema = new mongoose.Schema(
       type: datatype,
       default: data[7],
     },
-    backTracking: {
+    backtracking: {
       type: datatype,
       default: data[8],
     },
-    stacksAndQueues: {
+    stacks_queues: {
       type: datatype,
       default: data[9],
     },
@@ -74,11 +74,11 @@ const questionSchema = new mongoose.Schema(
       type: datatype,
       default: data[12],
     },
-    dynamicProgramming: {
+    dynamic_programming: {
       type: datatype,
       default: data[13],
     },
-    bitManipulation: {
+    bit_manipulation: {
       type: datatype,
       default: data[14],
     },
