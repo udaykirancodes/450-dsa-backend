@@ -11,7 +11,7 @@ const {
   updateUserProgress,
 } = require("../controllers/progress.controller");
 
-router.get("/", progressValidation, isUser, getUserProgress);
+router.get("/", isUser, getUserProgress);
 router.post("/", progressValidation, isUser, updateUserProgress);
 
 module.exports = router;

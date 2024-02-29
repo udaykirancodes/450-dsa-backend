@@ -4217,4 +4217,23 @@ const data = [
   },
 ];
 
+const res = data.map((d) => {
+  return {
+    topicName: d.topicName,
+    position: d.position,
+    questions: d.questions.map((q) => {
+      return {
+        Done: q.Done,
+        Bookmark: q.Bookmark,
+        Notes: q.Notes,
+      };
+    }),
+  };
+});
+
+const fs = require("fs");
+fs.writeFile("./data/data.js", JSON.stringify(res), "utf8", (err) => {
+  if (err) console.log(err);
+});
+
 module.exports = { data };

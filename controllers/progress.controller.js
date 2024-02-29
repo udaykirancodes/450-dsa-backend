@@ -6,7 +6,6 @@ const { ApiResponse } = require("../utils/ApiResponse");
 const getUserProgress = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition } = req.body;
     const progress = await Progress.findOne({ userid: userid });
     const data = [
       progress.array,

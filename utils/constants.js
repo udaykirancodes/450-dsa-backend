@@ -1,4 +1,4 @@
-const { data } = require("../data/ProgressData");
+const { data } = require("../data/QuestionData");
 
 const topics = [
   "array",

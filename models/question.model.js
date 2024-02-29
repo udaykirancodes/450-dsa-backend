@@ -1,87 +1,89 @@
 const mongoose = require("mongoose");
 
-const { simpleData } = require("../data/data");
+const { data } = require("../data/QuestionData");
 
 const datatype = {
   topicName: String,
   position: Number,
+  started: Boolean,
+  doneQuestions: Number,
   questions: [
     {
+      Topic: String,
+      Problem: String,
       Done: Boolean,
       Bookmark: Boolean,
       Notes: String,
+      URL: String,
+      URL2: String,
     },
   ],
 };
 
-const progressSchema = new mongoose.Schema(
+const questionSchema = new mongoose.Schema(
   {
-    userid: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-    },
     array: {
       type: datatype,
-      default: simpleData[0],
+      default: data[0],
     },
     matrix: {
       type: datatype,
-      default: simpleData[1],
+      default: data[1],
     },
     string: {
       type: datatype,
-      default: simpleData[2],
+      default: data[2],
     },
     searchAndSort: {
       type: datatype,
-      default: simpleData[3],
+      default: data[3],
     },
     linkedList: {
       type: datatype,
-      default: simpleData[4],
+      default: data[4],
     },
     binaryTrees: {
       type: datatype,
-      default: simpleData[5],
+      default: data[5],
     },
     bst: {
       type: datatype,
-      default: simpleData[6],
+      default: data[6],
     },
     greedy: {
       type: datatype,
-      default: simpleData[7],
+      default: data[7],
     },
     backTracking: {
       type: datatype,
-      default: simpleData[8],
+      default: data[8],
     },
     stacksAndQueues: {
       type: datatype,
-      default: simpleData[9],
+      default: data[9],
     },
     heap: {
       type: datatype,
-      default: simpleData[10],
+      default: data[10],
     },
     graph: {
       type: datatype,
-      default: simpleData[11],
+      default: data[11],
     },
     trie: {
       type: datatype,
-      default: simpleData[12],
+      default: data[12],
     },
     dynamicProgramming: {
       type: datatype,
-      default: simpleData[13],
+      default: data[13],
     },
     bitManipulation: {
       type: datatype,
-      default: simpleData[14],
+      default: data[14],
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("progress", progressSchema);
+module.exports = mongoose.model("question", questionSchema);
