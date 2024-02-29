@@ -9,6 +9,5 @@ module.exports = {
     ID: process.env.EMAIL,
     PASS: process.env.APP_PASSWORD,
   },
-  BASE_URL: process.env.BASE_URL,
   FRONTEND_URL: process.env.FRONTEND_URL,
 };
