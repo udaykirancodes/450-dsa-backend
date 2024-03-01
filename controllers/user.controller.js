@@ -93,6 +93,8 @@ const handleLoginUser = async (req, res) => {
     let data = {
       userid: user._id,
     };
+    user.token = "";
+    user.password = "";
     let authToken = await jwt.sign(data, config.JWT, { expiresIn: "7d" });
     res.status(200).json(new ApiResponse(200, { authToken, user }, "Success"));
   } catch (error) {
@@ -122,6 +124,7 @@ const handleVerifyEmail = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with token"));
     }
+    user.token = "";
     return res.status(200).json(new ApiResponse(200, user, "success"));
   } catch (error) {
     console.log(error.message);
@@ -149,6 +152,7 @@ const handleGetUserDetails = async (req, res) => {
         .status(400)
         .json(new ApiError(400, [], "User Not found with id"));
     }
+    user.token = "";
     return res.status(200).json(new ApiResponse(200, user, "success"));
   } catch (error) {
     console.log(error.message);
