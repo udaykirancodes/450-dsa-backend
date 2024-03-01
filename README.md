@@ -36,3 +36,11 @@
     ```bash
     npm run start
     ```
+
+### _Tech Stack Used_ :
+
+- Node - Runtime Env
+- Express - Server
+- Mongoose - Mongodb Operations
+- nodemailer - Sending Mails
+- jsonwebtoken - creating JWT Tokens
