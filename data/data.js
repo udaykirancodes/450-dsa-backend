@@ -2,6 +2,8 @@ const progressData = [
   {
     topicName: "Array",
     position: 0,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -188,6 +190,8 @@ const progressData = [
   {
     topicName: "Matrix",
     position: 1,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -244,6 +248,8 @@ const progressData = [
   {
     topicName: "String",
     position: 2,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -465,6 +471,8 @@ const progressData = [
   {
     topicName: "Search & Sort",
     position: 3,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -651,6 +659,8 @@ const progressData = [
   {
     topicName: "Linked List",
     position: 4,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -837,6 +847,8 @@ const progressData = [
   {
     topicName: "Binary Trees",
     position: 5,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1018,6 +1030,8 @@ const progressData = [
   {
     topicName: "BST",
     position: 6,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1134,6 +1148,8 @@ const progressData = [
   {
     topicName: "Greedy",
     position: 7,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1315,6 +1331,8 @@ const progressData = [
   {
     topicName: "BackTracking",
     position: 8,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1416,6 +1434,8 @@ const progressData = [
   {
     topicName: "Stacks & Queues",
     position: 9,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1612,6 +1632,8 @@ const progressData = [
   {
     topicName: "Heap",
     position: 10,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1708,6 +1730,8 @@ const progressData = [
   {
     topicName: "Graph",
     position: 11,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1934,6 +1958,8 @@ const progressData = [
   {
     topicName: "trie",
     position: 12,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -1970,6 +1996,8 @@ const progressData = [
   {
     topicName: "Dynamic Programming",
     position: 13,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,
@@ -2276,6 +2304,8 @@ const progressData = [
   {
     topicName: "Bit Manipulation",
     position: 14,
+    started: false,
+    doneQuestions: 0,
     questions: [
       {
         Done: false,

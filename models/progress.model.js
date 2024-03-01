@@ -5,6 +5,8 @@ const { progressData } = require("../data/data");
 const datatype = {
   topicName: String,
   position: Number,
+  started: Boolean,
+  doneQuestions: Number,
   questions: [
     {
       Done: Boolean,

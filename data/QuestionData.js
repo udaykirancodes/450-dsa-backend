@@ -4221,6 +4221,8 @@ const data = [
 //   return {
 //     topicName: d.topicName,
 //     position: d.position,
+//     started: false,
+//     doneQuestions: 0,
 //     questions: d.questions.map((q) => {
 //       return {
 //         Done: q.Done,

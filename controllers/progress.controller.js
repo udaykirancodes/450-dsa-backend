@@ -3,9 +3,7 @@ const { ApiError } = require("../utils/ApiError");
 const { ApiResponse } = require("../utils/ApiResponse");
 const { topics } = require("../utils/constants");
 const { data } = require("../data/QuestionData");
-
 const questions = data;
-
 // Get User Progress Based on AuthToken
 const getUserProgress = async (req, res) => {
   try {
@@ -16,13 +14,14 @@ const getUserProgress = async (req, res) => {
     if (!progress) {
       return res.status(400).json(new ApiError(400, [], "Not Progress Found"));
     }
+
     // generate data by combining questions and progress
     const data = topics.map((topic, index) => {
       return {
         topicName: questions[index].topicName,
         position: questions[index].position,
-        started: questions[index].started,
-        doneQuestions: questions[index].doneQuestions,
+        started: progress[topics[index]].started,
+        doneQuestions: progress[topics[index]].doneQuestions,
         questions: questions[index].questions.map((q, nested_index) => {
           return {
             Topic: questions[index].topicName,
@@ -49,11 +48,22 @@ const getUserProgress = async (req, res) => {
 const handleToogleMarkDone = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition, mark } = req.body;
+    const { topic, questionPosition, mark } = req.body;
     // find user's progress
     const progress = await Progress.findOneAndUpdate({ userid });
     // go to topic and update question fields
-    progress[topics[position]].questions[questionPosition].Done = mark;
+
+    progress[topic].questions[questionPosition].Done = mark;
+    if (mark) {
+      progress[topic].doneQuestions = progress[topic].doneQuestions + 1;
+      progress[topic].started = true;
+    } else {
+      progress[topic].doneQuestions =
+        progress[topic].doneQuestions - 1 >= 0
+          ? progress[topic].doneQuestions - 1
+          : 0;
+      progress[topic].started = progress[topic].doneQuestions > 0;
+    }
     await progress.save();
     if (mark) {
       return res
@@ -74,12 +84,12 @@ const handleToogleMarkDone = async (req, res) => {
 const handleToogleBookMark = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition, mark } = req.body;
+    const { topic, questionPosition, mark } = req.body;
     // find user's progress
     const progress = await Progress.findOneAndUpdate({ userid });
     // go to topic and update question fields
 
-    progress[topics[position]].questions[questionPosition].Bookmark = mark;
+    progress[topic].questions[questionPosition].Bookmark = mark;
 
     await progress.save();
     if (mark) {
@@ -101,11 +111,11 @@ const handleToogleBookMark = async (req, res) => {
 const handleUpdateNotes = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition, notes } = req.body;
+    const { topic, questionPosition, notes } = req.body;
     // find user's progress
     const progress = await Progress.findOneAndUpdate({ userid });
     // go to topic and update question fields
-    progress[topics[position]].questions[questionPosition].Notes = notes;
+    progress[topic].questions[questionPosition].Notes = notes;
     await progress.save();
     return res.status(200).json(new ApiResponse(200, {}, "Notes Updated"));
   } catch (error) {
