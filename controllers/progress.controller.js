@@ -49,17 +49,13 @@ const getUserProgress = async (req, res) => {
 const handleToogleMarkDone = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition } = req.body;
+    const { position, questionPosition, mark } = req.body;
     // find user's progress
     const progress = await Progress.findOneAndUpdate({ userid });
     // go to topic and update question fields
-    if (progress[topics[position]].questions[questionPosition].Done) {
-      progress[topics[position]].questions[questionPosition].Done = false;
-    } else {
-      progress[topics[position]].questions[questionPosition].Done = true;
-    }
+    progress[topics[position]].questions[questionPosition].Done = mark;
     await progress.save();
-    if (progress[topics[position]].questions[questionPosition].Done) {
+    if (mark) {
       return res
         .status(200)
         .json(new ApiResponse(200, {}, "Question Marked as Done"));
@@ -78,17 +74,15 @@ const handleToogleMarkDone = async (req, res) => {
 const handleToogleBookMark = async (req, res) => {
   try {
     const userid = req.user._id;
-    const { position, questionPosition } = req.body;
+    const { position, questionPosition, mark } = req.body;
     // find user's progress
     const progress = await Progress.findOneAndUpdate({ userid });
     // go to topic and update question fields
-    if (progress[topics[position]].questions[questionPosition].Bookmark) {
-      progress[topics[position]].questions[questionPosition].Bookmark = false;
-    } else {
-      progress[topics[position]].questions[questionPosition].Bookmark = true;
-    }
+
+    progress[topics[position]].questions[questionPosition].Bookmark = mark;
+
     await progress.save();
-    if (progress[topics[position]].questions[questionPosition].Bookmark) {
+    if (mark) {
       return res
         .status(200)
         .json(new ApiResponse(200, {}, "Question Marked as Bookmarked"));
