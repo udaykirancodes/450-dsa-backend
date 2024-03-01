@@ -20,7 +20,6 @@
   JWT_SECRET=some_secret_key
   EMAIL=your_mail_id
   APP_PASSWORD=app_password_of_mail_id (used for sending mails to verify user)
-  BASE_URL=http://localhost:8081/ (backend base url)
   FRONTEND_URL=http://localhost:3000/ (frontend base url)
   ```
 
